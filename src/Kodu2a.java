@@ -12,15 +12,21 @@
 
 public class Kodu2a {
 
-    //Koostan meetodi, mis simuleerib mündiviset oletades, et tahame saada ainult kulli. Kui programm tagastab väär ehk "false", tuli kiri, kui tõsi ehk "true", siis tuli kull.
-    //Meetodil puudub argument ning meetod tagastab "boolean"-i ehk tõeväärtuse (tõsi või väär).
+    /**
+     * Meeto kull()simuleerib mündiviset oletades, et tahame saada ainult kulli. Kui programm tagastab väär ehk "false", tuli kiri, kui tõsi ehk "true", siis tuli kull.
+     * Meetodil puudub argument.
+     * @return - Meetod tagastab "boolean"-i ehk tõeväärtuse (tõsi või väär).
+     */
     static boolean kull(){
         //Juhul, kui funktsiooni "Math.random()" tulemusel tuleb poollõigul [0; 0.5) asetsev arv, siis tagastatav väärtus on tõsi ehk "true", vastasel juhul ([0.5; 1)) tagastab väär ehk "false".
         return Math.random() < 0.5;
     }
 
-    //Meetod paljajaluVäljumisteArv võtab argumendiks täisarvu "väljumisiKokku" ning selle abil, leiab eraku paljajalu väljumiste arvu iga saja väljumise järel.
-    //Antud meetod ei tagasta midagi, kuna tulemused kuvatakse koheselt terminali kasutades teist meetodit "vormistus()".
+    /**
+     * Meetod paljajaluVäljumisteArv arvutab tsüklite abil, mitu korda erak väljus enda majast paljajalu.
+     * @param väljumisiKokku - Antud parameeter on täisarv, mis tähistab, mitu korda erak väljub enda majast.
+     * Antud meetod ei tagasta midagi, kuna tulemused kuvatakse koheselt terminali kasutades teist meetodit "vormistus()".
+     */
     static void paljajaluVäljumisteArv(int väljumisiKokku){
         //Tähistan mündiviske puhul, et kui tuleb kull, siis erak väljub ja siseneb vasakust uksest.
         //Täisarvuline muutuja "vasakUks" algväärtus on kolm, sest selle ukse ees asetseb alguses 3 kinga paari.
@@ -72,7 +78,7 @@ public class Kodu2a {
                         //Kontrollin ega kummagi ukse juures pole 6 paari kingi, sest kui on see tähendab, et erak tuli tagasi paljajalu ja ta ei pea tagasi panema kingapaari.
                         if (vasakUks == 6 || paremUks == 6) {
                             ;
-                        //Kui erakul on ikkagi kingad jalas, siis ta paneb need tagasi parema ukse juurde. Muutujale "paremUks" liidetakse üks.
+                        //Kui erakul on ikkagi kingad jalas, siis ta paneb need tagasi parema ukse juurde. Muutujale "paremUks" liidetakse üks.k
                         }else{
                             paremUks++;
                         }
@@ -84,9 +90,12 @@ public class Kodu2a {
         }
     }
 
-    //Antud meetodiga leian paljajalu väljumiste protsendi. Selle jaoks jagan eraku paljajalu väljumised kogu väljumiste arvuga ning korrutan 100-ga.
-    //Meetod tagastab sõne, sest ülesande vormistuses oli vaja komakoht eraldada komaga, mitte punktiga. Seetõttu pidin kasutama "String.format()" funktsiooni.
-    //Meetodi argumentideks on eraku väljumised kokku ning tema paljajalu väljumised. Mõlemad argumendid on täisarvud.
+    /**
+     * //Antud meetodiga leian paljajalu väljumiste protsendi. Selle jaoks jagan eraku paljajalu väljumised kogu väljumiste arvuga ning korrutan 100-ga.
+     * @param väljumisiKokku - Antud argument on täisarv, mis tähistab, mitu korda erak enda majast väljus.
+     * @param paljajaluVäljumised - Antud argument on täisarv ning see tähistab, mitu korda erak väljus paljajalu enda majast.
+     * @return - Meetod tagastab sõne, sest ülesande vormistuses oli vaja komakoht eraldada komaga, mitte punktiga. Seetõttu pidin kasutama "String.format()" funktsiooni.
+     */
     static String paljajaluVäljumisteProtsent(int väljumisiKokku, int paljajaluVäljumised){
         //Arvutan välja protsendi.
         double protsent = (double)paljajaluVäljumised / (double)väljumisiKokku * 100;
@@ -96,8 +105,12 @@ public class Kodu2a {
         return sõneProtsent;
     }
 
-    //Meetod vormistus on mõeldud selleks, et vormistada andmed selleks vajalikul moel. Meetod ei tagasta mitte midagi, sest see prindib kohe vastavad tulemused terminali.
-    //Meetodi argumentideks on eraku väljumised kokku ning tema paljajalu väljumised. Mõlemad argumendid on täisarvud.
+    /**
+     * Meetod vormistus() on mõeldud selleks, et vormistada andmed vastavalt tingimustele.
+     * @param väljumisiKokku - Antud argument on täisarv, mis tähistab, mitu korda erak enda majast väljus.
+     * @param paljadJalad - Antud argument on täisarv ning see tähistab, mitu korda erak väljus paljajalu enda majast.
+     *  Meetod ei tagasta mitte midagi, sest see prindib kohe vastavad tulemused terminali.
+     */
     static void vormistus(int väljumisiKokku, int paljadJalad){
         //Leian paljajalu väljumiste protsendi, et kuvada see terminalis.
         String protsent = paljajaluVäljumisteProtsent(väljumisiKokku, paljadJalad);
