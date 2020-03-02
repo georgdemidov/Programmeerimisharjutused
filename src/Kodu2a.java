@@ -13,7 +13,7 @@
 public class Kodu2a {
 
     /**
-     * Meeto kull()simuleerib mündiviset oletades, et tahame saada ainult kulli. Kui programm tagastab väär ehk "false", tuli kiri, kui tõsi ehk "true", siis tuli kull.
+     * Meetod kull() simuleerib mündiviset oletades, et tahame saada ainult kulli. Kui programm tagastab väär ehk "false", tuli kiri, kui tõsi ehk "true", siis tuli kull.
      * Meetodil puudub argument.
      * @return - Meetod tagastab "boolean"-i ehk tõeväärtuse (tõsi või väär).
      */
@@ -116,7 +116,7 @@ public class Kodu2a {
         String protsent = paljajaluVäljumisteProtsent(väljumisiKokku, paljadJalad);
         //Kasutades "printf()" funktsiooni vormistan ülesande vastavalt juhendile. Jutumärkides on muutujale vastav käsk. "%arvs" paigutab arvu vastavasse vahemikku.
         //"%%" kuvab terminali %- märgi ning "%n" abil liigub käsurida uuele reale.
-        System.out.printf("%7s %13s %12s %% %n", väljumisiKokku, paljadJalad, protsent);
+        System.out.printf("%7s %12s %12s%% %n", väljumisiKokku, paljadJalad, protsent);
         //Meetod ei tagasta midagi, sest see on "void" meetod, mis ei peagi midagi tagastama.
     }
 
