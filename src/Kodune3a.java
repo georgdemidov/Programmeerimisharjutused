@@ -110,27 +110,47 @@ public class Kodune3a{
 		return tulemus;
 	}
 
-	static String päevadeVäikseimTemperatuurideVahe(String[] kuupäevad, double[] temperatuurid){
-		double miinimum;
-		double maksimum;
-		double vahe = Integer.MAX_VALUE;
-		String kuupäev;
-		for (int i = 0; i < kuupäevad.length; i++) {
-			miinimum = Integer.MAX_VALUE;
-			maksimum = Integer.MIN_VALUE;
-			while (kuupäevad[i].charAt(9) != kuupäevad[i+1].charAt(9)){
-				if (temperatuurid[i] > maksimum){
-					maksimum = temperatuurid[i];
-				}else if (temperatuurid[i] < miinimum){
-					miinimum = temperatuurid[i];
-				}
-			}
-			if ((maksimum - miinimum) < vahe){
-				vahe = maksimum - miinimum;
-				kuupäev
+	static int lokaalseteEkstreemumiteArv(double [] temperatuutid){
+		int ekstreemumid = 0;
+		for (int i = 1; i < temperatuutid.length - 1; i++) {
+			if (temperatuutid[i-1] < temperatuutid[i] && temperatuutid[i+1] < temperatuutid[i]){
+				ekstreemumid += 1;
+			}else if (temperatuutid[i-1] > temperatuutid[i] && temperatuutid[i+1] > temperatuutid[i]){
+				ekstreemumid += 1;
 			}
 		}
-		return kuupäev;
+		return ekstreemumid;
+	}
+
+	static String päevadeVäikseimTemperatuurideVahe(String[] kuupäevad, double[] temperatuurid) {
+		double miinimum;
+		double maksimum;
+		double minimaalneVahe = Integer.MAX_VALUE;
+		String väikseimKuupäev = "tere";
+		int j = 0;
+		for (int i = 0; i < kuupäevad.length / 288; i++){
+			miinimum = Integer.MAX_VALUE;
+			maksimum = Integer.MIN_VALUE;
+			while (kuupäevad[j].charAt(9) == kuupäevad[j+1].charAt(9) && kuupäevad[j].charAt(6) == kuupäevad[j+1].charAt(6)){
+				if (temperatuurid[j] < miinimum){
+					miinimum = temperatuurid[j];
+					j++;
+				}else if (temperatuurid[j] > maksimum){
+					maksimum = temperatuurid[j];
+					j++;
+				}else{
+					j++;
+				}
+			}
+			System.out.println(kuupäevad[j]);
+			System.out.println(maksimum - miinimum);
+			if ((maksimum - miinimum) < minimaalneVahe){
+				minimaalneVahe = maksimum - miinimum;
+				väikseimKuupäev = kuupäevad[j];
+			}
+			j++;
+		}
+		return väikseimKuupäev;
 	}
 
 	//////////////////////////////////////////////// LAHENDAMINE-TESTIMINE:
@@ -138,7 +158,7 @@ public class Kodune3a{
 		System.out.println("Kodutöö nr 3a.                          Programmi väljund");
 		System.out.println("=========================================================:");
 		//////////////////////////////////// ETTEVALMISTUS:
-		String fNimi = "C:\\Users\\Georg\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2019.txt"; // lühinimi, fail asub jooksvas kaustas
+		String fNimi = "C:\\Users\\demidov\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2019.txt"; // lühinimi, fail asub jooksvas kaustas
 		String[] read = readFailist(fNimi);  
 		// massiivi 'read' elemendiks on rida failist fNimi, 
 		// 									näiteks "2018-12-12 23:45:00, -2.07697986577"
@@ -168,6 +188,12 @@ public class Kodune3a{
 			System.out.printf("%s %s %.2f %s", kuud[i], "keskmine temperatuur oli", kuudeKeskmised[i], "kraadi.");
 			System.out.println();
 		}
+		//Päevade miinimumi ja maksimumi väikseim vahe.
+		System.out.println();
+		System.out.println("Päevade miinimumi ja maksimumi vahe oli kõige väiksem " + päevadeVäikseimTemperatuurideVahe(kuupäev, temperatuur) + ".");
+		System.out.println();
+		//Lokaalsete ekstreemumite arv.
+		System.out.println("2019. aastal esines temperatuuride tekstifailis " + lokaalseteEkstreemumiteArv(temperatuur) +  " lokaalset ekstreemumit.");
 		//////////////////////////////////// ETTEVALMISTUS.
 		//////////////////////////////////// Ülli Õpilase meetodite testrakendused:
 		// --------------------------------------------------------------NÄIDIS!
