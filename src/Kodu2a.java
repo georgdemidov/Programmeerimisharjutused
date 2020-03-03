@@ -78,7 +78,7 @@ public class Kodu2a {
                         //Kontrollin ega kummagi ukse juures pole 6 paari kingi, sest kui on see tähendab, et erak tuli tagasi paljajalu ja ta ei pea tagasi panema kingapaari.
                         if (vasakUks == 6 || paremUks == 6) {
                             ;
-                        //Kui erakul on ikkagi kingad jalas, siis ta paneb need tagasi parema ukse juurde. Muutujale "paremUks" liidetakse üks.k
+                        //Kui erakul on ikkagi kingad jalas, siis ta paneb need tagasi parema ukse juurde. Muutujale "paremUks" liidetakse üks.
                         }else{
                             paremUks++;
                         }
@@ -109,7 +109,7 @@ public class Kodu2a {
      * Meetod vormistus() on mõeldud selleks, et vormistada andmed vastavalt tingimustele.
      * @param väljumisiKokku - Antud argument on täisarv, mis tähistab, mitu korda erak enda majast väljus.
      * @param paljadJalad - Antud argument on täisarv ning see tähistab, mitu korda erak väljus paljajalu enda majast.
-     *  Meetod ei tagasta mitte midagi, sest see prindib kohe vastavad tulemused terminali.
+     * Meetod ei tagasta mitte midagi, sest see prindib kohe vastavad tulemused terminali.
      */
     static void vormistus(int väljumisiKokku, int paljadJalad){
         //Leian paljajalu väljumiste protsendi, et kuvada see terminalis.
