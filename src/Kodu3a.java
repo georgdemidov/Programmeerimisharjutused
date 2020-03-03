@@ -47,9 +47,19 @@ public class Kodu3a {
 
     static double[] kuudeKeskmisedTemperatuurid(ArrayList<String> massiiv) {
         double[] tulemus = new double[12];
-        for (String rida : massiiv) {
-            for (int i = 0; i < 2; i++) {
-                String[] osad = rida.split(" ");
+        double kuuKekmine = 0;
+        int i = 0;
+        int j = 0;
+        int h = 0;
+        for (String rida: massiiv) {
+            i++;
+            String[] osad = rida.split(" ");
+            kuuKekmine += Double.parseDouble(osad[2]);
+            if (i == massiiv.size() || (osad[0].charAt(6) != massiiv.get(i).charAt(6))){
+                h++;
+                tulemus[j] = kuuKekmine / (i / h);
+                j++;
+                kuuKekmine = 0;
             }
         }
         return tulemus;
@@ -88,5 +98,6 @@ public class Kodu3a {
         }
         System.out.println(Arrays.toString(maksimumJaMiinimum(temperatuurid)));
         System.out.println(aastaKeskmineTemperatuur(temperatuurid));
+        System.out.println(Arrays.toString(kuudeKeskmisedTemperatuurid(temperatuurid)));
     }
 }
