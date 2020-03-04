@@ -18,12 +18,13 @@
  * 
  * Mall-programmi autor: Jüri Kiho
  * Kaasautor: Georg Demidov, programmeeris järgmised meetodid
- *          [ 0) temperatuur(String päev, String kell) ] 
- *			  1) 
- *			  2)
- *            3)
- *            4)
- *            5)
+ *            0) temperatuur(String päev, String kell)
+ *			  1) maksimumJaMiinimum(double[] temperatuurid)
+ *			  2) aastaKeskmineTemperatuur(double[] temperatuurid)
+ *            3) lokaalseteEkstreemumiteArv(double [] temperatuutid)
+ *            4) kuudeKeskmisedTemperatuurid(String[] kuupäevad, double[] temperatuurid)
+ *            5) päevadeVäikseimTemperatuurideVahe(String[] kuupäevad, double[] temperatuurid)
+ *
  *						--- Käitlemine käsurealt ---
  * 					Eeldus: jooksvas kaustas on 
  ' 								see fail (Kodune3a.java, utf8 vormingus),
@@ -50,7 +51,6 @@ public class Kodune3a{
 	
 	
 	// Ülli Õpilase koostatud meetodid:
-	// --------------------------------------------------------------NÄIDIS!
 	/** Leida antud ajal mõõdetud temperatuur.
 	 *  Globaalsed parameetrid: järjendid 'kuupäev', 'kellaaeg' ja 'temperatuur'.
 	 * @param päev Kuupäev kujul aaaa-kk-pp.
@@ -64,57 +64,92 @@ public class Kodune3a{
 		return null;
 	}//temperatuur
 
+	/**
+	 * Meetod maksimumJaMiimimum() leiab 2019. aastal mõõdetud temperatuuridest kõige kõrgema temperatuuri ja kõige madalama temperatuuri.
+	 * @param temperatuurid - Antud meetod võtab argumendiks ujukomaarvude massiivi, mis sisaldab endas temperatuure.
+	 * @return - Meetod tagastab ujukomaarvude massiivi, milles on kaks elementi- kõrgeim ja madalaim temperatuur.
+	 */
 	static double [] maksimumJaMiinimum(double[] temperatuurid){
+		//Loon muutujad miinimum ja maksimum, et nende abil kontrollida, kas temperatuur on madalaim või kõrgeim.
 		double miinimum = Integer.MAX_VALUE;
 		double maksimum = Integer.MIN_VALUE;
 		double[] tulemus = new double[2];
-		for (double rida : temperatuurid) {
-			if (rida < miinimum) {
-				miinimum = rida;
-			} else if (rida > maksimum) {
-				maksimum = rida;
+		for (double element : temperatuurid) { //Käin massiivis läbi iga tema elemedi ja kontrollin ega ta pole suurem või väiksem, kui eelnevad temperatuurid.
+			if (element < miinimum) {
+				miinimum = element;
+			}
+			if (element > maksimum) {
+				maksimum = element;
 			}
 		}
+		//Lisan ujukomaarvude järjendisse tulemus madalaima ja kõrgeima temperatuuri.
 		tulemus[0] = miinimum;
 		tulemus[1] = maksimum;
 		return tulemus;
 	}
 
+	/**
+	 * Meetod aastaKeskmineTemperatuur() leiab 2019. aasta keskmise temperatuuri.
+	 * @param temperatuurid - Antud meetod võtab argumendiks ujukomaarvude massiivi, mis sisaldab endas temperatuure.
+	 * @return - Meetod tagastab ujukomaarvu, mis näitab 2019. aasta keskmist temperatuuri.
+	 */
 	static double aastaKeskmineTemperatuur(double[] temperatuurid){
 		double summa = 0;
-		int i = 0;
-		for (double rida: temperatuurid) {
-			i++;
+		for (double rida: temperatuurid) { //Käin massiivis läbi iga tema elemendi ning liidan selle muutujale summa juurde, et saada teada kogu temperatuuride summa.
 			summa += rida;
 		}
-		double keskmine = summa / i;
+		//Muutuja keskmise abil jagan 2019. aasta temperatuuride kogusumma läbi massiivi pikkusega, sest selle pikkus näitab, mitu temperatuuri oli massiivis.
+		double keskmine = summa / temperatuurid.length;
 		return keskmine;
 	}
 
+	/**
+	 * Meetod kuudeKeskmisedTemperatuurid() leiab 2019. aasta iga kuu keskmise temperatuuri.
+	 * @param kuupäevad - Antud meetod võtab argumendiks sõnede massiivi, mis sisaldab endas 2019. aasta kuupäevi.
+	 * @param temperatuurid - Antud meetod võtab argumendiks ujukomaarvude massiivi, mis sisaldab endas temperatuure.
+	 * @return - Meetod tagastab ujukomaarvude massiivi, mis sisaldab endas 12 elementi ja iga element on vastavalt jaanuari kuni detsembri keskmine temperatuur.
+	 */
 	static double[] kuudeKeskmisedTemperatuurid(String[] kuupäevad, double[] temperatuurid) {
+		//Loon ujukomaarvude massiivi, mis saab sisaldada kuni 12 elementi.
 		double[] tulemus = new double[12];
-		double kuuKekmine = 0;
+		double kuuKeskmine = 0;
+		//Loon kolm täisarvulist muutujat, mis aitavad mul toimetada tsükli sees.
 		int i = 0;
 		int j = 0;
 		int h = 0;
-		for (String rida: kuupäevad) {
-			kuuKekmine += temperatuurid[i];
+		for (String rida: kuupäevad) {//Käin labi sõnede massiivi iga kuupäeva. Seda ülesannet oleks ka võinud lahendada "fori" tsükliga, ent mõtlesin, et sellega oleks huvitavam.
+			//Lisan muutujale kuuKeskmine kuu iga temperatuuri.
+			kuuKeskmine += temperatuurid[i];
 			i++;
+			//Lisan muutujale h pidevalt ühe, sest seda on vaja kasutada iga kuu temperatuuride summa läbi jagamisel mõõdetud temperatuuride arvuga.
+			h++;
+			//Kui lõpuks juhtub, et kuupäevade massiivis kuupäeval muutub kuu, siis siseneb meetod tinglausesse. Samuti, kui muutuja i pikkus on sama, mis temperatuuri massiivi pikkus, siis siseneb meetod tinglausesse.
 			if (i == temperatuurid.length || kuupäevad[i].charAt(6) != kuupäevad[i-1].charAt(6)){
-				h++;
-				tulemus[j] = kuuKekmine / (i / h);
+				//Lisan muutujale kohal j vastava kuu keskmise temperatuuri.
+				tulemus[j] = kuuKeskmine / h;
+				//Muudan h muutuja väärtuse tagasi 0 peale, sest igas kuus on erinev arv päevi.
+				h = 0;
 				j++;
-				kuuKekmine = 0;
+				//Samuti muudan muutuja kuuKeskmine tagasi 0 peale, et iga kuu puhul lugeda selle kuu temperatuuride summat.
+				kuuKeskmine = 0;
 			}
 		}
 		return tulemus;
 	}
 
+	/**
+	 * Meetod lokaalseteEkstreemumiteArv() leiab temperatuuride massiivist kõik lokaalsed ekstreemumid
+	 * (kohad, kus [i-1] ja [i+1] on mõlemad väiksemad või suuremad kui element kohal i). Kusjuures, otspunkte ei tohi arvestada, sest need pole lokaalsed.
+	 * @param temperatuutid - Antud meetod võtab argumendiks ujukomaarvude massiivi, mis sisaldab endas temperatuure.
+	 * @return - Meetod tagastab täisarvu, mis näitab mitu lokaalset ekstreemumi oli temperatuuride massiivis.
+	 */
 	static int lokaalseteEkstreemumiteArv(double [] temperatuutid){
 		int ekstreemumid = 0;
-		for (int i = 1; i < temperatuutid.length - 1; i++) {
+		for (int i = 1; i < temperatuutid.length - 1; i++) {//Käin tsüklit nii kaua läbi, kuni muutuja i ei ole võrdne temperatuurid massiivi pikkusega.
+			//Kui temperatuur kohal i on suurem kui [i-1] ja [i+1], siis lisan muutujale ekstreemumid ühe.
 			if (temperatuutid[i-1] < temperatuutid[i] && temperatuutid[i+1] < temperatuutid[i]){
 				ekstreemumid += 1;
+			//Kui temperatuur kohal i on väiksem kui [i-1] ja [i+1], siis lisan muutujale ekstreemumid ühe.
 			}else if (temperatuutid[i-1] > temperatuutid[i] && temperatuutid[i+1] > temperatuutid[i]){
 				ekstreemumid += 1;
 			}
@@ -122,46 +157,57 @@ public class Kodune3a{
 		return ekstreemumid;
 	}
 
+	/**
+	 * Meetod päevadeVäikseimTemperatuurideVahe, leiab päeva 2019. aastal, mille kõrgeima temperatuuri ja madalaima temperatuuri vahe oli väiksem, kui kõigil teistel päevadel.
+	 * @param kuupäevad - Antud meetod võtab argumendiks sõnede massiivi, mis sisaldab endas 2019. aasta temperatuure.
+	 * @param temperatuurid - Antud meetod võtab argumendiks ujukomaarvude massiivi, mis sisaldab endas temperatuure.
+	 * @return - Meetod tagastab sõne, milleks on päev, millal oli kõrgeima ja madalaima temperatuuri vahe aasta jooksul kõige väiksem.
+	 */
 	static String päevadeVäikseimTemperatuurideVahe(String[] kuupäevad, double[] temperatuurid) {
 		double miinimum;
 		double maksimum;
 		double minimaalneVahe = Integer.MAX_VALUE;
+		//Muutuja sõne lõpuks saab endale väärtuseks päeva, millal temperatuuride vahe oli väikseim.
 		String väikseimKuupäev = "tere";
 		int j = 0;
-		for (int i = 0; i < kuupäevad.length / 288; i++){
+		for (int i = 0; i < kuupäevad.length / 288; i++){//Käin tsükli läbi just nii mitu korda, sest kuupäevade tsükkel jagates 365-ga saab vastuseks 288. Selle tõttu saan käia tsükli läbi piisavalt kordi, et saada igat päeva analüüsida.
 			miinimum = Integer.MAX_VALUE;
 			maksimum = Integer.MIN_VALUE;
+			//"While" tsükli abil, käin läbi iga päeva kõik temperatuurid eraldi. Nii kaua kuni ei saab uus päev, käin seda tsüklit läbi.
 			while (kuupäevad[j].charAt(9) == kuupäevad[j+1].charAt(9) && kuupäevad[j].charAt(6) == kuupäevad[j+1].charAt(6)){
-				if (temperatuurid[j] < miinimum){
+				//Kui temperatuur kohal j on väiksem, kui hetkel olev miinimumi väärtus, siis muudan muutuja miinimum väärtust.
+				if(temperatuurid[j] < miinimum){
 					miinimum = temperatuurid[j];
-					j++;
-				}else if (temperatuurid[j] > maksimum){
-					maksimum = temperatuurid[j];
-					j++;
-				}else{
-					j++;
 				}
+				//Kui temperatuur kohal j on suurem, kui hetkel olev maksimumi väärtus, siis muudan muutuja miinimum väärtust.
+				if (temperatuurid[j] > maksimum){
+					maksimum = temperatuurid[j];
+				}
+				//Juhul, kui temperatuur kohal j, ei ole suurem kui maksimum või väiksem kui miinimum, siis lisan muutujale j ühe tinglausetest väljas pool.
+				j++;
 			}
-			System.out.println(kuupäevad[j]);
-			System.out.println(maksimum - miinimum);
+			//Nüüd kontrollin, kas uue päeva kõrgeima ja madalaima temperatuuri vahe pole väiksem, kui seni kõige väiksem vahe.
 			if ((maksimum - miinimum) < minimaalneVahe){
+				//Juhul kui see on, muudan minimaalneVahe muutuja väärtust nüüdseks kõige väiksemaks vaheks.
 				minimaalneVahe = maksimum - miinimum;
+				//Samuti muudan muutuja väikseimKuupäev sõneks, milleks on kuupäev, millal esines väiksem vahe senini.
 				väikseimKuupäev = kuupäevad[j];
 			}
+			//Lisan muutujale j ühe tsüklist väljas, sest vastasel juhul, ei käivituks enam "while" tsükkel mitte kordagi pärast esimest korda.
 			j++;
 		}
 		return väikseimKuupäev;
 	}
 
-	//////////////////////////////////////////////// LAHENDAMINE-TESTIMINE:
+	//Peameetod, kuhu on koondatud meetodite testid ning, kuhu on ka koondatud vormistuslik pool.
 	public static void main(String[] args) {
 		System.out.println("Kodutöö nr 3a.                          Programmi väljund");
 		System.out.println("=========================================================:");
 		//////////////////////////////////// ETTEVALMISTUS:
-		String fNimi = "C:\\Users\\demidov\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2019.txt"; // lühinimi, fail asub jooksvas kaustas
+		String fNimi = "C:\\Users\\Georg\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2019.txt"; // lühinimi, fail asub jooksvas kaustas
 		String[] read = readFailist(fNimi);  
-		// massiivi 'read' elemendiks on rida failist fNimi, 
-		// 									näiteks "2018-12-12 23:45:00, -2.07697986577"
+		//massiivi 'read' elemendiks on rida failist fNimi,
+		//näiteks "2018-12-12 23:45:00, -2.07697986577"
 		kolmJärjendit(read); // kolm järjendit (massiivi) faili ridadest
 		// formeeritud on kolm järjendit (kuupäev[], kellaaeg[] ja temperatuur[])
 		// kontroll, 10 esimest elementi igast järjendist:
@@ -188,20 +234,16 @@ public class Kodune3a{
 			System.out.printf("%s %s %.2f %s", kuud[i], "keskmine temperatuur oli", kuudeKeskmised[i], "kraadi.");
 			System.out.println();
 		}
-		//Päevade miinimumi ja maksimumi väikseim vahe.
+		//Päevade miinimumi ja maksimumi väikseim vahe meetodi testimine.
 		System.out.println();
 		System.out.println("Päevade miinimumi ja maksimumi vahe oli kõige väiksem " + päevadeVäikseimTemperatuurideVahe(kuupäev, temperatuur) + ".");
 		System.out.println();
-		//Lokaalsete ekstreemumite arv.
+		//Lokaalsete ekstreemumite arvu meetodi testimine.
 		System.out.println("2019. aastal esines temperatuuride tekstifailis " + lokaalseteEkstreemumiteArv(temperatuur) +  " lokaalset ekstreemumit.");
-		//////////////////////////////////// ETTEVALMISTUS.
-		//////////////////////////////////// Ülli Õpilase meetodite testrakendused:
-		// --------------------------------------------------------------NÄIDIS!
-		// meetodi üksTemperatuur() test:
+		//Ülli Õpilase meetodite testrakendused:
 		String sünnipäev = "2019-08-25";
 		String kell = "12:00:00";
-		System.out.print("\nMinu sünnipäeval eelmisel aastal (" + sünnipäev 
-												+ ") oli keskpäevane temperatuur ");
+		System.out.print("\nMinu sünnipäeval eelmisel aastal (" + sünnipäev + ") oli keskpäevane temperatuur ");
 		Double x = üksTemperatuur(sünnipäev, kell);
 		if(x == null)
 			System.out.println("\n!! Antud aega: " + sünnipäev + " " + kell + " ei leitud !!"); 
@@ -214,7 +256,7 @@ public class Kodune3a{
 		
 	}
 
-	//////////////////////////////////////////////////////// EELPROGRAMMEERITUD MEETODID:
+	//EELPROGRAMMEERITUD MEETODID:
 	/** Sisestada read failist.
 	 * @param fNimi Tekstifaili nimi. Faili ridade arv < 110000.
 	 * @return Järjend, mille i-ndaks elemendiks on antud faili i-s rida.
