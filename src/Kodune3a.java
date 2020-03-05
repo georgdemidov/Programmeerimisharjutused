@@ -216,7 +216,17 @@ public class Kodune3a{
 		for(int i = 0; i < 10; i++)
 			System.out.println(kuupäev[i] + "\t" + kellaaeg[i] + "\t" + temperatuur[i]);
 		System.out.println("   ...   \t   ...   \t    ...");
-		//
+		//Ülli Õpilase meetodite testrakendused:
+		String sünnipäev = "2019-08-25";
+		String kell = "12:00:00";
+		System.out.print("\nMinu sünnipäeval eelmisel aastal (" + sünnipäev + ") oli keskpäevane temperatuur ");
+		Double x = üksTemperatuur(sünnipäev, kell);
+		if(x == null)
+			System.out.println("\n!! Antud aega: " + sünnipäev + " " + kell + " ei leitud !!");
+		else
+			System.out.println(Math.round(x*10)/10.0 + " kraadi."); // üks koht pärast koma (punkti)
+		// --------------------------------------------------------------
+		//Madalaima ja kõrgeima aasta temperatuuri meetodi väljastamine.
 		System.out.println();
 		System.out.printf("%s %.2f %s", "Aasta madalaim temperatuur oli", maksimumJaMiinimum(temperatuur)[0], "kraadi.");
 		System.out.println();
@@ -228,12 +238,15 @@ public class Kodune3a{
 		System.out.println();
 		//Iga kuu keskmise temperatuuri meetodi testimine.
 		System.out.println();
+		System.out.println("2019. aasta kuude keskmised temperatuurid:");
+		System.out.println("------------------------------------------------");
 		String [] kuud = {"Jaanuari", "Veebruari", "Märtsi", "Aprilli", "Mai", "Juuni", "Juuli", "Augusti", "Septempri", "Oktoobri", "Novembri", "Detsembri"};
 		double[] kuudeKeskmised = kuudeKeskmisedTemperatuurid(kuupäev, temperatuur);
 		for (int i = 0; i < 12; i++) {
 			System.out.printf("%s %s %.2f %s", kuud[i], "keskmine temperatuur oli", kuudeKeskmised[i], "kraadi.");
 			System.out.println();
 		}
+		System.out.println("------------------------------------------------");
 		//Päevade miinimumi ja maksimumi väikseim vahe meetodi testimine.
 		System.out.println();
 		System.out.println("Päevade miinimumi ja maksimumi vahe oli kõige väiksem " + päevadeVäikseimTemperatuurideVahe(kuupäev, temperatuur) + ".");
@@ -241,15 +254,6 @@ public class Kodune3a{
 		//Lokaalsete ekstreemumite arvu meetodi testimine.
 		System.out.println("2019. aastal esines temperatuuride tekstifailis " + lokaalseteEkstreemumiteArv(temperatuur) +  " lokaalset ekstreemumit.");
 		//Ülli Õpilase meetodite testrakendused:
-		String sünnipäev = "2019-08-25";
-		String kell = "12:00:00";
-		System.out.print("\nMinu sünnipäeval eelmisel aastal (" + sünnipäev + ") oli keskpäevane temperatuur ");
-		Double x = üksTemperatuur(sünnipäev, kell);
-		if(x == null)
-			System.out.println("\n!! Antud aega: " + sünnipäev + " " + kell + " ei leitud !!"); 
-		else
-			System.out.println(Math.round(x*10)/10.0 + " kraadi."); // üks koht pärast koma (punkti)
-		// --------------------------------------------------------------
 		System.out.println("\n=========================================================.");		
 		System.out.println("Georg Demidov                     "
 					+ new java.sql.Timestamp(System.currentTimeMillis())); // kellaajaga
