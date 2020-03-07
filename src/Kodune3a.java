@@ -204,7 +204,7 @@ public class Kodune3a{
 		System.out.println("Kodutöö nr 3a.                          Programmi väljund");
 		System.out.println("=========================================================:");
 		//////////////////////////////////// ETTEVALMISTUS:
-		String fNimi = "C:\\Users\\Georg\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2019.txt"; // lühinimi, fail asub jooksvas kaustas
+		String fNimi = "C:\\Users\\demidov\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2019.txt"; // lühinimi, fail asub jooksvas kaustas
 		String[] read = readFailist(fNimi);  
 		//massiivi 'read' elemendiks on rida failist fNimi,
 		//näiteks "2018-12-12 23:45:00, -2.07697986577"

@@ -96,6 +96,7 @@ public class Kodu3a {
                 }
             }
         }
+        System.out.println(temperatuurid);
         System.out.println(Arrays.toString(maksimumJaMiinimum(temperatuurid)));
         System.out.println(aastaKeskmineTemperatuur(temperatuurid));
         System.out.println(Arrays.toString(kuudeKeskmisedTemperatuurid(temperatuurid)));
