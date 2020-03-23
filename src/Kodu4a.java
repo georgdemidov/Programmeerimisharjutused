@@ -165,7 +165,7 @@ public class Kodu4a {
         System.out.println("Kodutöö nr 4a.                          Programmi väljund");
         System.out.println("=========================================================:" + "\n");
         System.out.println();
-        String fail = "C:\\Users\\demidov\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2018.txt";
+        String fail = "C:\\Users\\Georg\\IdeaProjects\\Programmeerimisharjutused\\src\\temperatuurid2019.txt";
         if (Character.getNumericValue(fail.charAt(76)) == 8){
             System.out.println("       AASTA 2018 TEMPERATUURIDE TABEL KUUDE LÕIKES");
         }else{
